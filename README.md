@@ -1,4 +1,4 @@
-# Shudhi
+# Shudhi: A must have Data science module
 
 ## Introduction
 

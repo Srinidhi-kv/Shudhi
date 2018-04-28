@@ -7,3 +7,7 @@ We are Data Science graduate students at Columbia University. We regularly analy
 ## Shudhi
 
 Shudhi stands for purification in many Indian languages. The aim of this module is to Process and Exlpore the data with minimum effort.
+
+## Feedback Form
+
+https://goo.gl/forms/E2kAqNsauIjBEVi33

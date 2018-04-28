@@ -14,10 +14,14 @@ a. Shudhi Describe: aids understanding by thoroughly describing a data: outputs 
 
 Function call: shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, target= None)
 
+#### (Please go through the shudhi_describe notebook/pdf to see practical implementation)
+
 ### Shudhi Transform
 b. Shudhi Transform: transforms the data by doing the most used pre processing methods: Missing value treatment, Outlier Treatment, Feature Scaling, Type Conversion and One hot encoding, on both train and test datasets.
 
 Function call: shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=None, empty_missing= False, missing_override=False, scale_strategy= None, outlier_strategy= None, one_hot= False, convert= False, imbalance_strategy= False)
+
+#### (Please go through the shudhi_transform notebook/pdf to see practical implementation)
 
 ## Feedback Form
 

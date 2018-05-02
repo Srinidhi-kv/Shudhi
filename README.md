@@ -17,7 +17,7 @@ a. Shudhi Describe: aids understanding by thoroughly describing a data: outputs 
 shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, target= None)
 ```
 
-#### (Please go through the shudhi_describe notebook/pdf to see practical implementation)
+#### (Please go through the shudhi_describe notebook/html to see practical implementation)
 
 ### Shudhi Transform
 b. Shudhi Transform: transforms the data by doing the most used pre processing methods: Missing value treatment, Outlier Treatment, Feature Scaling, Type Conversion and One hot encoding, on both train and test datasets.

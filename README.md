@@ -7,6 +7,7 @@ We are Data Science graduate students at Columbia University. We regularly analy
 ## Authors
 
 Aishwarya Srinivasan, Data Science, Columbia University: https://www.linkedin.com/in/aishwarya-srinivasan/
+
 Srinidhi KV, Data Science, Columbia University: https://www.linkedin.com/in/srinidhi-kv/
 
 ## Shudhi

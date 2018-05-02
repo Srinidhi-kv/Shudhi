@@ -24,15 +24,13 @@ a. Shudhi Describe: aids understanding by thoroughly describing a dataset: outpu
 ```{python}
 shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, target= None)
 ```
-df_train:          Training dataframe
-
-cols:              list of columns
-
-empty_missing:    "True" to consider empty strings as np.nan
-
-plot:              "False" to turf off plots
-
-target:            Target column name
+|Parameter| Description|
+|:---:|:---:|
+|df_train | Training dataframe|
+|cols| list of columns|
+|empty_missing | ‘True’ to consider empty strings as np.nan |
+|plot | ‘False’ to turf off plots |
+|target |  Target column name |
 
 #### (Please go through the shudhi_describe notebook/html to see a demo)
 
@@ -44,25 +42,19 @@ b. Shudhi Transform: transforms the data by doing the most used pre processing m
 ```{python}
 shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=None, empty_missing= False, missing_override=False, scale_strategy= None, outlier_strategy= None, one_hot= False, convert= False)
 ```
-df_train:          Training dataframe
+|Parameter| Description|
+|:---:|:---:|
+|df_train | Training dataframe|
+|df_test | Test Dataframe|
+|cols| list of columns|
+|missing_strategy|"remove"/"mean"/"median"/"mode" (imputes missing values)|
+|empty_missing | ‘True’ to consider empty strings as np.nan |
+|missing_overrideot | 'True' to override the 10% rule |
+|scale_strategy | "std"/"min_max"/"robust"/"max_abs"/"norm" (Scales data accordingly) |
+|outlier_strategy|"remove"/"min_max"/"mean (imputes outliers accordingly)|
+|one_hot|'True' to perform one hot encoding|
+|convert|'True' to convert dtypes|
 
-df_test:           Test dataset
-
-cols:              list of columns
-
-missing_strategy:  "remove"/"mean"/"median"/"mode" (imputes missing values)
-
-empty_missing:     'True' to consider empty strings as np.nan
-
-missing_override:  'True' to override the 10% rule
-
-scale_strategy:    "std"/"min_max"/"robust"/"max_abs"/"norm" (Scales data accordingly)
-
-outlier_strategy:  "remove"/"min_max"/"mean (imputes outliers accordingly)
-
-one_hot:           'True' to perform one hot encoding
-
-convert:           'True' to convert dtypes
 
 #### (Please go through the shudhi_transform notebook/html to see a demo)
 

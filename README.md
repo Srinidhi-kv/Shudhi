@@ -11,15 +11,18 @@ Aishwarya Srinivasan, Data Science, Columbia University: https://www.linkedin.co
 Srinidhi KV, Data Science, Columbia University: https://www.linkedin.com/in/srinidhi-kv/
 
 ## Shudhi
+
+Shudhi stands for purification in many Indian languages. Here, we aim to "purify" data so that it is easy to comprehend and ML models can be built on top of them with minimum effort.
+
+To use the module, you need to download the "shudhi.py" file, paste it in the lib/site-packages/ or paste in the same directory as your python notebook/file, and use the import statement as follows:
+
 ```{python}
 from shudhi import shudhi_describe, shudhi_transform
 ```
 
-Shudhi stands for purification in many Indian languages. Here, we aim to "purify" data so that it is easy to comprehend and ML models can be built on top of them with minimum effort. The module is divided into two sub-modules:
+### 1. Shudhi Describe
 
-### Shudhi Describe
-
-a. Shudhi Describe: aids understanding by thoroughly describing a dataset: outputs summary statistics, Univariate and Bivariate plots(with the Target) and a fine correlation plot.
+Shudhi Describe: aids understanding by thoroughly describing a dataset: outputs summary statistics, Univariate and Bivariate plots(with the Target) and a fine correlation plot.
 
 #### Function call
 ```{python}
@@ -35,8 +38,8 @@ shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, target=
 
 #### (Please go through the shudhi_describe notebook/html to see a demo)
 
-### Shudhi Transform
-b. Shudhi Transform: transforms the data by doing the most used pre processing methods: Missing value treatment, Outlier Treatment, Feature Scaling, Type Conversion and One hot encoding, on both train and test datasets.
+### 2. Shudhi Transform
+Shudhi Transform: transforms the data by doing the most used pre processing methods: Missing value treatment, Outlier Treatment, Feature Scaling, Type Conversion and One hot encoding, on both train and test datasets.
 
 #### Function call
 

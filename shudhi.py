@@ -134,7 +134,7 @@ def shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, tar
                         if len(df_train[col].dropna())< 568:
                             fraction=1
                         elif len(df_train[col].dropna())>= 568:
-                            fraction= min(1000/len(df_train[col].dropna(), 1))
+                            fraction= min(1000/len(df_train[col].dropna()), 1)
 
                         temp = pd.to_datetime((df_train[col].dropna()).sample(frac=fraction, replace=False))
                         col_identity.append((col,"Date/Time saved as string"))
@@ -639,7 +639,7 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
                     if len(df_train[col].dropna())< 568:
                         fraction=1
                     elif len(df_train[col].dropna())>= 568:
-                        fraction=min(1000/len(df_train[col].dropna(), 1))
+                        fraction=min(1000/len(df_train[col].dropna()), 1)
 
                     temp = pd.to_numeric((df_train[col].dropna()).sample(frac=fraction, replace=True))
 
@@ -660,7 +660,7 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
                         if len(df_train[col].dropna())< 568:
                             fraction=1
                         elif len(df_train[col].dropna())>= 568:
-                            fraction= min(1000/len(df_train[col].dropna(), 1))
+                            fraction= min(1000/len(df_train[col].dropna()), 1)
 
                         temp = pd.to_datetime((df_train[col].dropna()).sample(frac=fraction, replace=False))
                         col_identity.append((col,"Date/Time saved as string"))

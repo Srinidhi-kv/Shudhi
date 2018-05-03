@@ -242,7 +242,7 @@ def shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, tar
                 if len(df_train[col].dropna())>0:
                     plt.subplot(con_plot, 2, i) 
                     sns.distplot(df_train[col].dropna())
-                    plt.title("Distribution of Feature: \""+ col+"\"", fontsize=15)
+                    plt.title("Distribution of Feature: \""+ str(col)+"\"", fontsize=15)
                     plt.xlabel(col, fontsize=15)
                     plt.ylabel("count", fontsize=15)            
                     i+=1
@@ -265,7 +265,7 @@ def shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, tar
                 if df_train[col].nunique() <= 20:
                     plt.subplot(cat_plot, 2, i) 
                     sns.countplot(x=df_train[col])
-                    plt.title("Distribution of Feature: \""+ col+"\"",  fontsize=15, color='#0F0F0F')
+                    plt.title("Distribution of Feature: \""+ str(col)+"\"",  fontsize=15, color='#0F0F0F')
                     plt.xlabel(col, fontsize=15)
                     plt.ylabel("count", fontsize=15)
                     i+=1
@@ -282,7 +282,7 @@ def shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, tar
                 if not col == target and len(df_train[col].dropna())>0:
                     plt.subplot(con_plot, 2, i) 
                     sns.regplot(x=df_train[col], y=df_train[target], fit_reg= False, scatter_kws={'alpha':0.6})
-                    plt.title("Target vs \""+ col+"\"", fontsize=15)
+                    plt.title("Target vs \""+ str(col)+"\"", fontsize=15)
                     plt.xlabel(col, fontsize=15)
                     plt.ylabel(target, fontsize=15)            
                     i+=1

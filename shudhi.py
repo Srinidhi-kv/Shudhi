@@ -8,7 +8,8 @@ import time
 from scipy.stats import zscore
 from datetime import datetime
 from IPython.display import display, HTML
-from sklearn.preprocessing import StandardScaler, MaxAbsScaler, MinMaxScaler, RobustScaler, Normalizer, Imputer
+from sklearn.preprocessing import StandardScaler, MaxAbsScaler, MinMaxScaler, RobustScaler, Normalizer
+from sklearn.impute import SimpleImputer
 
 def shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, target= None):
     """This modules describes the dataset and allows you to learn its properties.
@@ -459,7 +460,7 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
 #Impute by mean            
         elif missing_strategy == 'mean':
 
-            imputer= Imputer(strategy='mean')
+            imputer= SimpleImputer(strategy='mean')
             df_train[cols]= imputer.fit_transform(df_train[cols])
 
             if not df_test == None:
@@ -469,7 +470,7 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
 
 #Impute by median                    
         elif missing_strategy == 'median':
-            imputer= Imputer(strategy='mean')
+            imputer= SimpleImputer(strategy='mean')
             df_train[cols]= imputer.fit_transform(df_train[cols])
 
             if not df_test == None:

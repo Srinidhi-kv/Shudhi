@@ -11,7 +11,7 @@ from IPython.display import display, HTML
 from sklearn.preprocessing import StandardScaler, MaxAbsScaler, MinMaxScaler, RobustScaler, Normalizer
 from sklearn.impute import SimpleImputer
 
-def shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, target= None):
+def shudhi_describe(df_train, cols=[None], empty_missing=False, plot=True, target=None):
     """This modules describes the dataset and allows you to learn its properties.
     df_train-> Dataset
     cols-> columns, in a list
@@ -77,9 +77,9 @@ def shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, tar
 
     else:
         for col in set(cols):
-            if pd.api.types.is_numeric_dtype(df_train[col])== True:
+            if pd.api.types.is_numeric_dtype(df_train[col]) == True:
                 con_cols.append(col)
-            elif pd.api.types.is_numeric_dtype(df_train[col])== False:
+            elif pd.api.types.is_numeric_dtype(df_train[col]) == False:
                 cat_cols.append(col)
  #------------------------------------------------------------------------------------------------------------#    
     
@@ -111,9 +111,9 @@ def shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, tar
                     #Choosing fraction of sample to test on -> to improve latency
                     #Worst case- 5% rows will have "bad" data and we want to be right >95% of the time
                     #So, if length<568, consider, all samples. Else, take 10% random sample
-                    if len(df_train[col].dropna())< 568:
+                    if len(df_train[col].dropna()) < 568:
                         fraction=1
-                    elif len(df_train[col].dropna())>= 568:
+                    elif len(df_train[col].dropna()) >= 568:
                         fraction=min(1000/len(df_train[col].dropna()), 1)
                     
                     temp = pd.to_numeric((df_train[col].dropna()).sample(frac=fraction, replace=True))
@@ -121,26 +121,26 @@ def shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, tar
                     if (temp.dtype.kind=="i"):
                         col_identity.append((col,"Integer saved as string"))
 
-                        if(convert ==True):
+                        if(convert==True):
                             df_train[col] = pd.to_numeric(df_train[col])
 
                     else:
                         col_identity.append((col,"Real Value saved as string"))
 
-                        if(convert ==True):
+                        if(convert==True):
                             df_train[col] = pd.to_numeric(df_train[col])
 
                 except:            
                     try:
-                        if len(df_train[col].dropna())< 568:
+                        if len(df_train[col].dropna()) < 568:
                             fraction=1
-                        elif len(df_train[col].dropna())>= 568:
-                            fraction= min(1000/len(df_train[col].dropna()), 1)
+                        elif len(df_train[col].dropna()) >= 568:
+                            fraction = min(1000/len(df_train[col].dropna()), 1)
 
                         temp = pd.to_datetime((df_train[col].dropna()).sample(frac=fraction, replace=False))
                         col_identity.append((col,"Date/Time saved as string"))
 
-                        if(convert ==True):
+                        if(convert==True):
                             df_train[col] = pd.to_datetime(df_train[col])
 
                     except:
@@ -159,49 +159,48 @@ def shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, tar
 
         warnings.filterwarnings("ignore")
         
-        df_train= df_train[cols]
+        df_train = df_train[cols]
     #If empty is true, consider empty space/s as nan's
         if empty_missing:
-            df_train[cols]= df_train[cols].replace(r'^\s*$', np.nan, regex=True)
+            df_train[cols] = df_train[cols].replace(r'^\s*$', np.nan, regex=True)
         
     #Call identifier function defined above    
         df_identify= shudhi_identify(df_train, cols)
         
     #Counts for all features
         df_count = pd.DataFrame(columns =['Feature', 'count'])
-        df_count['Feature']= df_train.columns
-        df_count['count']= len(df_train.index)
+        df_count['Feature'] = df_train.columns
+        df_count['count'] = len(df_train.index)
 
         df_missing = df_train.isnull().sum().reset_index() #Identify empty/string?
         df_missing.columns = ['Feature', '# Missing']  
 
-        df_unique= df_train.nunique().reset_index()
+        df_unique = df_train.nunique().reset_index()
         df_unique.columns = ['Feature', '# Unique']
 
-        df_count= pd.concat([df_identify, df_count['count'], df_unique['# Unique'], df_missing['# Missing']], axis=1)
+        df_count = pd.concat([df_identify, df_count['count'], df_unique['# Unique'], df_missing['# Missing']], axis=1)
 
     #Do the below for continuous features only
         if con_cols:
 
             #df_train1=df_train.dropna(axis=1, how='all')
             
-            df_mean= df_train[con_cols].mean().reset_index().round(2)
+            df_mean = df_train[con_cols].mean().reset_index().round(2)
             df_mean.columns = ['Feature', 'mean']
 
-            df_median= df_train[con_cols].median().reset_index().round(2)
+            df_median = df_train[con_cols].median().reset_index().round(2)
             df_median.columns = ['Feature', 'median']
 
-            df_min= df_train[con_cols].min().reset_index()
+            df_min = df_train[con_cols].min().reset_index()
             df_min.columns = ['Feature', 'min']
 
-            df_max= df_train[con_cols].max().reset_index()
+            df_max = df_train[con_cols].max().reset_index()
             df_max.columns = ['Feature', 'max']
 
             mean = df_train[con_cols].mean()
             std = df_train[con_cols].std()
 
-            df_outlier= pd.DataFrame(((df_train[con_cols] < (mean - 2 * std)) | (df_train[con_cols]> (mean + 2* std))).sum()).reset_index()
-            #df_outlier= df_train[con_cols].dropna()[(np.abs(zscore(df_train[con_cols].dropna())) > 2).all(axis=1)].count().reset_index()
+            df_outlier = pd.DataFrame(((df_train[con_cols] < (mean - 2 * std)) | (df_train[con_cols]> (mean + 2* std))).sum()).reset_index()
             df_outlier.columns = ['Feature', '# Outliers']
 
             df_stats= pd.concat([df_outlier, df_mean['mean'], df_median['median'], df_min['min'], df_max['max']], axis=1)
@@ -212,7 +211,7 @@ def shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, tar
 
         df_final.fillna('', inplace=True)
               
-        #Check out df_train.style!! https://pandas.pydata.org/pandas-docs/stable/style.html
+        #FIXME: Check out df_train.style!! https://pandas.pydata.org/pandas-docs/stable/style.html
         return df_final
 
     
@@ -221,26 +220,23 @@ def shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, tar
 #Shudhi Plots
     def shudhi_plots(df_train, cols, target, plot):
         """This module outputs univariate distributions of features, Target vs Feature plots and (optional)Feature vs Feature plots"""       
-
-    #        fig.subplots_adjust(hspace = .5, wspace=.001)
-
-    #        axs = axs.ravel()
+        
         if not plot:
             return
         
-        con_cols_nz=0
+        con_cols_nz = 0
         for col in con_cols:
-            if len(df_train[col].dropna())>0:
+            if len(df_train[col].dropna()) > 0:
                 con_cols_nz+=1
               
         if con_cols:
-            i=1
+            i = 1
             con_plot = int(np.ceil(con_cols_nz/2))
             plt.subplots(1, 2, figsize=(20, 6*con_plot))
             
             print("    \033[4mUNIVATIATE PLOTS\033[0m:"+ " \033[4mContinuous Features\033[0m")
             for col in set(con_cols):
-                if len(df_train[col].dropna())>0:
+                if len(df_train[col].dropna()) > 0:
                     plt.subplot(con_plot, 2, i) 
                     sns.distplot(df_train[col].dropna())
                     plt.title("Distribution of Feature: \""+ str(col)+"\"", fontsize=15)
@@ -252,7 +248,7 @@ def shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, tar
         
         j=0
         for col in cat_cols:
-            if df_train[col].nunique()<=20:
+            if df_train[col].nunique() <= 20:
                 j+=1
         
         if cat_cols:
@@ -320,8 +316,8 @@ def shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, tar
 #----------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------
 
-def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=None, empty_missing= False, missing_override=False
-                     , scale_strategy= None, outlier_strategy= None, one_hot= False, convert= False, imbalance_strategy= False):
+def shudhi_transform(df_train, df_test=None, cols= [None], missing_strategy=None, empty_missing=False, missing_override=False
+                     , scale_strategy=None, outlier_strategy=None, one_hot=False, convert=False, imbalance_strategy=False):
     """A module to transform data to make it ML library readable. Treats missing values, outliers, converts the data type and 
     scales the data  does one hot encoding.
     Default: shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=None, empty_missing= False, missing_override=False
@@ -335,7 +331,7 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
     if not isinstance(df_train, pd.DataFrame):
         return print("Error: Invalid entry for df_train field. Enter a pandas DataFrame")
     
-    if not df_test== None:
+    if not df_test == None:
         if not isinstance(df_test, pd.DataFrame):
             return print("Error: Invalid entry for df_train field. Enter a pandas DataFrame")
         if not np.array_equal(df_train.columns, df_test.columns):
@@ -370,11 +366,11 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
 
 # Set Global variable cols
 
-    all_con_cols= [] #All continuous columns of Datset
-    all_cat_cols= [] #All categorical columns of Datset
+    all_con_cols = [] #All continuous columns of Datset
+    all_cat_cols = [] #All categorical columns of Datset
     
-    con_cols=[] #All continuous columns in cols given
-    cat_cols=[] #All categorical columns in cols given
+    con_cols = [] #All continuous columns in cols given
+    cat_cols = [] #All categorical columns in cols given
 
 #Find all categorical and continuous features in the dataset    
 
@@ -419,7 +415,7 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
            cols-> list of column names. "all" for all columns, "con" for continuous and "cat" for categorical features
            Default: shudhi_missing(df_test= None, cols=None, missing_strategy= None, empty= False, group_by= None) """
 
-        if missing_strategy==None:
+        if missing_strategy == None:
             return df_train, df_test
 
 #         if (group_by != None) and (group_by not in df_train.columns):
@@ -431,16 +427,16 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
 
 #If empty is true, replace empty space/s as nan's- get this in the main function
         if empty_missing:
-            df_train[cols]=df_train[cols].replace(r'^\s*$', np.nan, regex=True)
+            df_train[cols] = df_train[cols].replace(r'^\s*$', np.nan, regex=True)
             if not df_test == None:
                 df_test[cols]=df_test[cols].replace(r'^\s*$', np.nan, regex=True)
 
         if not missing_override:
-            new_cols=[]
+            new_cols = []
             for col in df_train[cols].columns:
                 if df_train[col].isnull().mean() <= 0.1:
                     new_cols.append(col)
-            cols=new_cols
+            cols = new_cols
             
             print("Warning: If a column has >10% missing values, it will not be acted upon unless \"override=True\" is set. The below columns are considered:")
             print(cols)
@@ -470,8 +466,8 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
 
 #Impute by median                    
         elif missing_strategy == 'median':
-            imputer= SimpleImputer(strategy='mean')
-            df_train[cols]= imputer.fit_transform(df_train[cols])
+            imputer = SimpleImputer(strategy='mean')
+            df_train[cols] = imputer.fit_transform(df_train[cols])
 
             if not df_test == None:
                 df_test[cols] = imputer.transform(df_test[cols])
@@ -482,9 +478,9 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
 
 #             if False in table:
             for col in cols:
-                df_train[col]= df_train[col].fillna(df_train[col].value_counts().index[0])
+                df_train[col] = df_train[col].fillna(df_train[col].value_counts().index[0])
                 if not df_test == None:
-                    df_test[col]= df_test[col].fillna(df_train[col].value_counts().index[0])
+                    df_test[col] = df_test[col].fillna(df_train[col].value_counts().index[0])
             return df_train, df_test
     
 #------------------------------------------------------------------------------------------------------------ 
@@ -495,12 +491,12 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
         """Does outlier treatment. Values beyond 2 standard deviations away from mean are considered outliers.
         shudhi_outlier(df_train, df_test, cols, outlier_strategy)"""
         
-        if outlier_strategy==None:
+        if outlier_strategy == None:
             return df_train, df_test
 
        #Check if all columns are numeric
         if cat_cols: #If categorical columns in cols
-            cols= con_cols #Consider only continuous columns
+            cols = con_cols #Consider only continuous columns
             print("Warning: Entered inconsistent column types. Only Continuous features will be outlier treated.")
 
         #If all checks pass, impute using the given strategy
@@ -508,7 +504,7 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
             print("Error: One or more columns have Nan's, hence not outlier treated. Please do missing value treatment and come back later.")
             return df_train, df_test
         
-        if outlier_strategy=="remove":
+        if outlier_strategy == "remove":
                   
             for col in cols:
 
@@ -519,15 +515,15 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
                     
             return df_train, df_test    
         
-        elif outlier_strategy=="minmax":
+        elif outlier_strategy == "minmax":
                    
             for col in cols:
 
                 try:
                     min_val = df_train[col].min()
                     max_val = df_train[col].max()
-                    df_train.loc[zscore(df_train[col])<-2]= max_val
-                    df_train.loc[zscore(df_train[col])>2]= min_val
+                    df_train.loc[zscore(df_train[col])<-2] = max_val
+                    df_train.loc[zscore(df_train[col])>2] = min_val
                                 
                 except Exception as e: print("Exception thrown \n ", e)
             
@@ -556,12 +552,12 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
     # StandardScaler, MaxAbsScaler, MinMaxScaler, RobustScaler, Normalizer
 
         #Run checks on the the entered arguments
-        if scale_strategy== None:
+        if scale_strategy == None:
             return df_train, df_test
 
     #Check if all columns are numeric
         if cat_cols: #If categorical columns in cols
-            cols= con_cols #Consider only continuous columns
+            cols = con_cols #Consider only continuous columns
             print("Warning: Entered inconsistent column types. Only Continuous features will be scaled.")
 
         #If all checks pass, impute using the given strategy
@@ -569,39 +565,39 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
             print("Error: One or more columns have Nan's, hence not scaled Please do missing value treatment and come back later.")
             return df_train, df_test
         
-        if scale_strategy=='std':
-            scaler=StandardScaler(with_mean=True, with_std= True)
-            df_train[cols]= scaler.fit_transform(df_train[cols])
+        if scale_strategy =='std':
+            scaler = StandardScaler(with_mean=True, with_std= True)
+            df_train[cols] = scaler.fit_transform(df_train[cols])
             if not df_test == None:
-                df_test[cols]= scaler.transform(df_test[cols])
+                df_test[cols] = scaler.transform(df_test[cols])
             return df_train, df_test
 
-        if scale_strategy=='robust':
-            scaler=RobustScaler()
-            df_train[cols]= scaler.fit_transform(df_train[cols])
+        if scale_strategy == 'robust':
+            scaler = RobustScaler()
+            df_train[cols] = scaler.fit_transform(df_train[cols])
             if not df_test == None:
-                df_test[cols]= scaler.transform(df_test[cols])
+                df_test[cols] = scaler.transform(df_test[cols])
             return df_train, df_test
 
-        if scale_strategy=='min_max':
-            scaler=MinMaxScaler()
-            df_train[cols]= scaler.fit_transform(df_train[cols])
+        if scale_strategy == 'min_max':
+            scaler = MinMaxScaler()
+            df_train[cols] = scaler.fit_transform(df_train[cols])
             if not df_test == None:
-                df_test[cols]= scaler.transform(df_test[cols])
+                df_test[cols] = scaler.transform(df_test[cols])
             return df_train, df_test
 
-        if scale_strategy=='max_abs':
+        if scale_strategy == 'max_abs':
             scaler= MaxAbsScaler()
-            df_train[cols]= scaler.fit_transform(df_train[cols])
+            df_train[cols] = scaler.fit_transform(df_train[cols])
             if not df_test == None:
-                df_test[cols]= scaler.transform(df_test[cols])
+                df_test[cols] = scaler.transform(df_test[cols])
             return df_train, df_test
 
-        if scale_strategy=='norm':
-            scaler=Normalizer()
-            df_train[cols]= scaler.fit_transform(df_train[cols])
+        if scale_strategy == 'norm':
+            scaler = Normalizer()
+            df_train[cols] = scaler.fit_transform(df_train[cols])
             if not df_test == None:
-                df_test[cols]= scaler.transform(df_test[cols])
+                df_test[cols] = scaler.transform(df_test[cols])
             return df_train, df_test
 
 #--------------------------------------------------------------------------------------------------------------  
@@ -620,16 +616,16 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
         for col in df_train.columns:
 
             if(df_train[col].dtype.kind=="i" or df_train[col].dtype.kind=="u"): 
-                col_identity.append((col,"Integer"))
+                col_identity.append((col, "Integer"))
 
             elif(df_train[col].dtype.kind=="f"):
-                col_identity.append((col,"Real Value"))
+                col_identity.append((col, "Real Value"))
 
             elif(df_train[col].dtype.kind=="b"):
-                col_identity.append((col,"Boolean"))
+                col_identity.append((col, "Boolean"))
 
             elif(df_train[col].dtype.kind=="M"):
-                col_identity.append((col,"Date/Time"))
+                col_identity.append((col, "Date/Time"))
 
             else:
                 try:
@@ -637,36 +633,36 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
                     #Worst case- 5% rows will have "bad" data and we want to be right >95% of the time
                     #So, if length<568, consider, all samples. Else, take 10% random sample
 
-                    if len(df_train[col].dropna())< 568:
-                        fraction=1
-                    elif len(df_train[col].dropna())>= 568:
-                        fraction=min(1000/len(df_train[col].dropna()), 1)
+                    if len(df_train[col].dropna()) < 568:
+                        fraction = 1
+                    elif len(df_train[col].dropna()) >= 568:
+                        fraction = min(1000/len(df_train[col].dropna()), 1)
 
                     temp = pd.to_numeric((df_train[col].dropna()).sample(frac=fraction, replace=True))
 
                     if (temp.dtype.kind=="i"):
                         col_identity.append((col,"Integer saved as string"))
 
-                        if(convert ==True):
+                        if(convert==True):
                             df_train[col] = pd.to_numeric(df_train[col])
 
                     else:
                         col_identity.append((col,"Real Value saved as string"))
 
-                        if(convert ==True):
+                        if(convert==True):
                             df_train[col] = pd.to_numeric(df_train[col])
 
                 except:            
                     try:
-                        if len(df_train[col].dropna())< 568:
+                        if len(df_train[col].dropna()) < 568:
                             fraction=1
-                        elif len(df_train[col].dropna())>= 568:
+                        elif len(df_train[col].dropna()) >= 568:
                             fraction= min(1000/len(df_train[col].dropna()), 1)
 
                         temp = pd.to_datetime((df_train[col].dropna()).sample(frac=fraction, replace=False))
                         col_identity.append((col,"Date/Time saved as string"))
 
-                        if(convert ==True):
+                        if(convert == True):
                             df_train[col] = pd.to_datetime(df_train[col])
 
                     except:
@@ -688,7 +684,7 @@ def shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=Non
 
         try:
             df_train = pd.get_dummies(df_train, columns=cols)         
-            if(df_test!= None):            
+            if(df_test!=None):            
                 df_test = pd.get_dummies(df_test, columns=cols)
 
                 for col in df_train.columns:            

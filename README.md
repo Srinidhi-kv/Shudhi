@@ -31,10 +31,10 @@ shudhi_describe(df_train, cols=[None], empty_missing=False, plot=True, target=No
 |Parameter| Description|
 |:---:|:---:|
 |df_train | Training dataframe|
-|cols| list of columns|
-|empty_missing | ‘True’ to consider empty strings as np.nan |
-|plot | ‘False’ to turf off plots |
-|target |  Target column name |
+|cols | list of columns(opt)|
+|empty_missing | ‘True’ to consider empty strings as np.nan(opt)|
+|plot | ‘False’ to turn off all plots(opt)|
+|target |  Target column name iff plots needed(opt)|
 
 #### (Please go through the shudhi_describe notebook/html to see a demo)
 

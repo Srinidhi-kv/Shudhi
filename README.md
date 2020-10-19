@@ -26,7 +26,7 @@ Shudhi Describe: aids understanding by thoroughly describing a dataset: outputs 
 
 #### Function call
 ```{python}
-shudhi_describe(df_train, cols= [None], empty_missing= False, plot=True, target= None)
+shudhi_describe(df_train, cols=[None], empty_missing=False, plot=True, target=None)
 ```
 |Parameter| Description|
 |:---:|:---:|
@@ -44,7 +44,7 @@ Shudhi Transform: transforms the data by doing the most used pre processing meth
 #### Function call
 
 ```{python}
-shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=None, empty_missing= False, missing_override=False, scale_strategy= None, outlier_strategy= None, one_hot= False, convert= False)
+shudhi_transform(df_train, df_test= None, cols= [None], missing_strategy=None, empty_missing=False, missing_override=False, scale_strategy=None, outlier_strategy=None, one_hot=False, convert=False)
 ```
 |Parameter| Description|
 |:---:|:---:|
